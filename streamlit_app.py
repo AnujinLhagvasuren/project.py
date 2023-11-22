@@ -1,4 +1,4 @@
-import yfinance as yf
+import talhchiher.xls as tc
 import streamlit as st
 
 st.write("""
