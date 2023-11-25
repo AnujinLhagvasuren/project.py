@@ -1,4 +1,6 @@
-yfinance 
-pandas
-plotly
+yfinance==0.1.63
+streamlit==1.10.0
+pandas==1.3.3
+plotly==5.1.0
+
 pip install -r requirements.txt
