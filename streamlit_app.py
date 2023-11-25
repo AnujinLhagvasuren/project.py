@@ -2,6 +2,9 @@ import yfinance as yf
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+pip install plotly
+streamlit run stock_dashboard.py
+
 
 df = pd.read_csv("project1data.csv")
 st.dataframe(df)
