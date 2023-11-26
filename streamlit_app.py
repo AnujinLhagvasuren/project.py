@@ -14,12 +14,22 @@ def get_stock_data(symbol, start_date, end_date):
     stock_data = yf.download(symbol, start=start_date, end=end_date)
     return stock_data
 
-# Sidebar with user input
-st.sidebar.header("Stock Dashboard")
-symbol_options = ["AARD", "AARD", "ABH", "ACL", "ADB", "ADL", "ADU", "AHH", "AIC", "ALA", "ALD", "BLG", "BNG", "BODI", "GHC",
-                  "GLMT", "GNR", "GOV", "GOV", "GTJ", "GTL", "GUR", "HAM", "HBO", "KHAN", "LEND", "TDB", "TEE", "TEX", "TGS",
-                  "TLP", "TMZ", "TNGR", "TSA", "TTL", "TTL", "TUM", "TUS", "TVL", "TVT", "UBH", "UID", "ULZ", "UNS", "UYN",
-                  "VIK", "XAC", "XOC", "BEND", "BGFI"]
+symbol_options = [
+    "AAR", "AARD", "ABH", "ACL", "ADB", "ADL", "ADU", "AHH", "AIC", "ALA", "ALD", "ALI", "AMT", 
+    "AOI", "APU", "ARJ", "ATR", "AZH", "BAJ", "BAN", "BAZ", "BBD", "BDL", "BDS", "BEU", "BHG", 
+    "BHL", "BHR", "BLC", "BLG", "BNG", "BODI", "BOE", "BOGD", "BOR", "BRC", "BSKY", "BTG", "BUK", 
+    "CHR", "CND", "CNF", "CUMN", "DAH", "DAR", "DAZ", "DES", "DHU", "DLH", "DMA", "DSS", "DZG", 
+    "EAZ", "ECV", "EER", "ERDN", "ERS", "ETR", "GAZR", "GFG", "GHC", "GLMT", "GNR", "GOV", "GOV", 
+    "GTJ", "GTL", "GUR", "HAM", "HBO", "HBT", "HBZ", "HGN", "HHN", "HHS", "HJL", "HML", "HRD", 
+    "HRL", "HRM", "HSG", "HSR", "HSX", "HTS", "HUN", "HUV", "HVL", "IBA", "INT", "INV", "ITLS", 
+    "JGL", "JGV", "JLT", "JTB", "KEK", "KHAN", "LEND", "MBG", "MBW", "MCH", "MDIC", "MDR", "MDZ", 
+    "MFC", "MFG", "MIB", "MIE", "MIK", "MLG", "MMX", "MNB", "MNDL", "MNG", "MNH", "MNP", "MNS", 
+    "MOG", "MRX", "MSC", "MSE", "MSH", "MUDX", "MVO", "NEH", "NKT", "NOG", "NRS", "NXE", "OLL", 
+    "ONH", "ORD", "RMC", "SBM", "SDT", "SEND", "SES", "SHG", "SHV", "SIL", "SOH", "SOR", "SSG", 
+    "SUN", "SUU", "SVR", "TAH", "TAL", "TAS", "TAV", "TCK", "TDB", "TEE", "TEX", "TGS", "TLP", 
+    "TMZ", "TNGR", "TSA", "TTL", "TTL", "TUM", "TUS", "TVL", "TVT", "UBH", "UID", "ULZ", "UNS", 
+    "UYN", "VIK", "XAC", "XOC", "BEND", "BGFI"]
+
 
 symbol = st.sidebar.selectbox("Select Stock Symbol", symbol_options)
 start_date = st.sidebar.date_input("Start Date", pd.to_datetime("2022-01-01"))
