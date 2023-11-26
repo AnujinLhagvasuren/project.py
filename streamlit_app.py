@@ -16,8 +16,12 @@ def get_stock_data(symbol, start_date, end_date):
 
 # Sidebar with user input
 st.sidebar.header("Stock Dashboard")
-symbol = st.sidebar.text_input("Enter Stock Symbol:","AARD,"AARD","ABH","ACL","ADB","ADL","ADU","AHH","AIC","ALA","ALD","BLG","BNG","BODI","GHC"
-,"GLMT","GNR","GOV","GOV","GTJ","GTL","GUR","HAM","HBO","KHAN","LEND","TDB","TEE","TEX","TGS","TLP","TMZ","TNGR","TSA","TTL","TTL","TUM","TUS","TVL","TVT","UBH","UID","ULZ","UNS","UYN","VIK","XAC","XOC","BEND","BGFI"))
+symbol_options = ["AARD", "AARD", "ABH", "ACL", "ADB", "ADL", "ADU", "AHH", "AIC", "ALA", "ALD", "BLG", "BNG", "BODI", "GHC",
+                  "GLMT", "GNR", "GOV", "GOV", "GTJ", "GTL", "GUR", "HAM", "HBO", "KHAN", "LEND", "TDB", "TEE", "TEX", "TGS",
+                  "TLP", "TMZ", "TNGR", "TSA", "TTL", "TTL", "TUM", "TUS", "TVL", "TVT", "UBH", "UID", "ULZ", "UNS", "UYN",
+                  "VIK", "XAC", "XOC", "BEND", "BGFI"]
+
+symbol = st.sidebar.selectbox("Select Stock Symbol", symbol_options)
 start_date = st.sidebar.date_input("Start Date", pd.to_datetime("2022-01-01"))
 end_date = st.sidebar.date_input("End Date", pd.to_datetime("2023-01-01"))
 
