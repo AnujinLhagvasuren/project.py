@@ -7,8 +7,6 @@ import plotly.express as px
 df = pd.read_csv("project1data.csv")
 st.dataframe(df)
 
-
-
 # Function to fetch stock data using yfinance
 def get_stock_data(symbol, start_date, end_date):
     stock_data = yf.download(symbol, start=start_date, end=end_date)
@@ -45,8 +43,8 @@ try:
     st.dataframe(stock_df.head())
 
     # Plot stock closing price
-    st.write(f"## {symbol} Closing Price Chart")
-    fig = px.line(stock_df, x=stock_df.index, y="Close", title=f"{symbol} Buy Price")
+    st.write(f"## {symbol} Buy Price Chart")
+    fig = px.line(stock_df, x=stock_df.index, y="Number of Stock", title=f"{symbol} Buy Price")
     st.plotly_chart(fig)
 
     # Interactive widgets
