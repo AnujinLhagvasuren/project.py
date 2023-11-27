@@ -128,93 +128,19 @@ selected_stocks = st.sidebar.multiselect("Select Stocks", [
     "ТАНДЭМ ИНВЭСТ ББСБ", "ХАС БАНК", "ҮНДЭСНИЙ ХУВЬЧЛАЛЫН САН", "BEND-BD-30/07/24-C0039-19.2", 
     "BGFI-BD-30/06/25-C0046-18.5"])
 
-
-
-# Fetch stock data for selected stocks
-stock_dfs = {}
-for stock in selected_stocks:
-    stock_dfs[stock] = get_stock_data(stock, start_date, end_date)
-
-# Display multiple stock data
-st.write("## Multiple Stock Data")
-for stock, df in stock_dfs.items():
-    st.write(f"### {stock} Stock Data")
-    st.dataframe(df.head())
-
-# Plot multiple stock closing prices
-st.write("## Multiple Stock Closing Price Chart")
-fig_multi = px.line()
-for stock, df in stock_dfs.items():
-    fig_multi.add_scatter(x=df.index, y=df["Close"], mode='lines', name=stock)
-
-st.plotly_chart(fig_multi)
-
-# Fetch stock data with additional parameters for candlestick chart
-candlestick_df = yf.download(symbol, start=start_date, end=end_date, interval='1d')
-
-# Display candlestick chart
-st.write(f"## {symbol} Candlestick Chart")
-fig_candlestick = px.candlestick(candlestick_df, x=candlestick_df.index, open='Open', high='High', low='Low', close='Close', title=f"{symbol} Candlestick Chart")
-st.plotly_chart(fig_candlestick)
-
-# Rolling average period
-rolling_period = st.sidebar.slider("Select Rolling Average Period", min_value=1, max_value=30, value=10)
-
-# Calculate rolling average
-stock_df['Rolling Average'] = stock_df['Close'].rolling(window=rolling_period).mean()
-
-# Display rolling average chart
-st.write("## Rolling Average Chart")
-fig_rolling_avg = px.line(stock_df, x=stock_df.index, y=["Close", "Rolling Average"], title=f"{symbol} Closing Price with Rolling Average")
-st.plotly_chart(fig_rolling_avg)
-
-# Calculate daily returns
-stock_df['Daily Return'] = stock_df['Close'].pct_change()
-
-# Display daily returns chart
-st.write("## Daily Returns Chart")
-fig_returns = px.line(stock_df, x=stock_df.index, y="Daily Return", title=f"{symbol} Daily Returns")
-st.plotly_chart(fig_returns)
-
-# Calculate Bollinger Bands
-stock_df['Rolling Mean'] = stock_df['Close'].rolling(window=20).mean()
-stock_df['Upper Band'] = stock_df['Rolling Mean'] + 2 * stock_df['Close'].rolling(window=20).std()
-stock_df['Lower Band'] = stock_df['Rolling Mean'] - 2 * stock_df['Close'].rolling(window=20).std()
-
-# Display Bollinger Bands chart
-st.write("## Bollinger Bands Chart")
-fig_bollinger = px.line(stock_df, x=stock_df.index, y=["Close", "Upper Band", "Lower Band"], title=f"{symbol} Bollinger Bands")
-st.plotly_chart(fig_bollinger)
-
-# Calculate MACD
-stock_df['ShortEMA'] = stock_df['Close'].ewm(span=12, adjust=False).mean()
-stock_df['LongEMA'] = stock_df['Close'].ewm(span=26, adjust=False).mean()
-stock_df['MACD'] = stock_df['ShortEMA'] - stock_df['LongEMA']
-stock_df['Signal Line'] = stock_df['MACD'].ewm(span=9, adjust=False).mean()
-
-# Display MACD chart
-st.write("## MACD Chart")
-fig_macd = px.line(stock_df, x=stock_df.index, y=["MACD", "Signal Line"], title=f"{symbol} MACD")
-st.plotly_chart(fig_macd)
-
-import requests
-
-# Function to fetch financial news
-def get_financial_news(symbol):
-    url = f"https://newsapi.org/v2/everything?q={symbol}&apiKey=YOUR_NEWS_API_KEY"
-    response = requests.get(url)
-    news_data = response.json()
-    return news_data['articles']
-
-# Fetch financial news for the selected stock
-news_articles = get_financial_news(symbol)
-
-# Display financial news
-st.write("## Financial News")
-for article in news_articles:
-    st.write(f"### {article['title']}")
-    st.write(article['description'])
-    st.write(f"Source: {article['source']['name']}")
-    st.write(f"Published At: {article['publishedAt']}")
-    st.write("---")
+b = (
+    Bar()
+    .add_xaxis(["Microsoft", "Amazon", "IBM", "Oracle", "Google", "Alibaba"])
+    .add_yaxis("2017-2018 Revenue in (billion $)", random.sample(range(100), 10))
+    .set_global_opts(
+        title_opts=opts.TitleOpts(
+            title="Top cloud providers 2018", subtitle="2017-2018 Revenue"
+        ),
+        toolbox_opts=opts.ToolboxOpts(),
+    )
+)
+st_pyecharts(
+    b, key="echarts"
+)  # Add key argument to not remount component at every Streamlit run
+st.button("Randomize data")
 
