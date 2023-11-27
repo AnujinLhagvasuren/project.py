@@ -35,11 +35,6 @@ end_date = st.sidebar.date_input("End Date", pd.to_datetime("2023-01-01"))
 
 
 
-def main():
-    st.title("Dashboard")
-
-    # Sample data
-    buy_price = [import streamlit as st
 
 def main():
     st.title("Dashboard")
