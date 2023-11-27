@@ -35,6 +35,39 @@ symbol = st.sidebar.selectbox("Select Stock Symbol", symbol_options)
 start_date = st.sidebar.date_input("Start Date", pd.to_datetime("2022-01-01"))
 end_date = st.sidebar.date_input("End Date", pd.to_datetime("2023-01-01"))
 
+
+import pandas as pd
+import streamlit as st
+import matplotlib.pyplot as plt
+
+# Replace the provided data with your own
+data = {
+    "Зах зээлийн үнэлгээ": [375583500.00, 86701216890.00, 46743360.00, 644756800.00, 31897600000.00, 1558667565.00, 4737724962.00, 6230249500.00, 19774750000.00, 36157800.00],
+    "Авах": [2700.00, 3017.00, 584, 0, 109.22, 602.05, 301.11, 2350.00, 780, 402.5],
+    "Зарах": [3160.00, 3031.00, 671, 12500.00, 114, 648, 345, 2679.00, 790.99, 0]
+}
+
+df = pd.DataFrame(data)
+
+# Sidebar with user input
+st.sidebar.header("Stock Dashboard")
+
+# Display the data
+st.write("## Зах зээлийн үнэлгээ Data")
+st.dataframe(df)
+
+# Plotting the scatter plot
+st.write("## Зах зээлийн үнэлгээ Scatter Plot")
+fig, ax = plt.subplots()
+ax.scatter(df["Зах зээлийн үнэлгээ"], df["Авах"], label="Авах", marker="o", color="blue")
+ax.scatter(df["Зах зээлийн үнэлгээ"], df["Зарах"], label="Зарах", marker="x", color="red")
+
+plt.xlabel("Зах зээлийн үнэлгээ")
+plt.ylabel("Value")
+plt.title("Зах зээлийн үнэлгээ - Авах/Зарах")
+plt.legend()
+st.pyplot(fig)
+
 # Fetch stock data
 try:
     stock_df = get_stock_data(symbol, start_date, end_date)
