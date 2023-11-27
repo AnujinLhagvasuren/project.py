@@ -34,6 +34,60 @@ start_date = st.sidebar.date_input("Start Date", pd.to_datetime("2022-01-01"))
 end_date = st.sidebar.date_input("End Date", pd.to_datetime("2023-01-01"))
 
 
+
+def main():
+    st.title("Dashboard")
+
+    # Sample data
+    buy_price = [import streamlit as st
+
+def main():
+    st.title("Dashboard")
+
+    # Sample data
+    buy_price = [2700.00, 3017.00]
+    sell_price = [3160.00, 3031.00]
+    industry_average = [375583500.00, 86701216890.00]
+
+    # Display buy price
+    st.header("Buy Price")
+    st.write(f"First buy price: {buy_price[0]}")
+    st.write(f"Second buy price: {buy_price[1]}")
+
+    # Display sell price
+    st.header("Sell Price")
+    st.write(f"First sell price: {sell_price[0]}")
+    st.write(f"Second sell price: {sell_price[1]}")
+
+    # Display industry average
+    st.header("Industry Average")
+    st.write(f"First industry average: {industry_average[0]}")
+    st.write(f"Second industry average: {industry_average[1]}")
+
+if __name__ == "__main__":
+    main()
+]
+    sell_price = [3160.00, 3031.00]
+    industry_average = [375583500.00, 86701216890.00]
+
+    # Display buy price
+    st.header("Buy Price")
+    st.write(f"First buy price: {buy_price[0]}")
+    st.write(f"Second buy price: {buy_price[1]}")
+
+    # Display sell price
+    st.header("Sell Price")
+    st.write(f"First sell price: {sell_price[0]}")
+    st.write(f"Second sell price: {sell_price[1]}")
+
+    # Display industry average
+    st.header("Industry Average")
+    st.write(f"First industry average: {industry_average[0]}")
+    st.write(f"Second industry average: {industry_average[1]}")
+
+if __name__ == "__main__":
+    main()
+
 # Fetch stock data
 try:
     stock_df = get_stock_data(symbol, start_date, end_date)
