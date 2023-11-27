@@ -44,7 +44,7 @@ try:
 
     # Plot stock closing price
     st.write(f"## {symbol} Buy Price Chart")
-    fig = px.line(stock_df, x=stock_df.index, y="Number of Stock", title=f"{symbol} Buy Price")
+    fig = px.line(stock_df, x=stock_df.index, y="Open", title=f"{symbol} Buy Price")
     st.plotly_chart(fig)
 
     # Interactive widgets
