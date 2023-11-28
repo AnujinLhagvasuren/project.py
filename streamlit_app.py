@@ -64,10 +64,18 @@ def main():
 if __name__ == "__main__":
     main()
 
+
+
+
 chart_data = pd.DataFrame(
-                np.random.rand(10, 4),
-                columns= ["Buy price","Average price","Sell price"])
-            st.line_chart(chart_data, height=210)
+    np.random.rand(10, 4),
+    columns=["Buy price", "Average price", "Sell price"]
+)
+
+st.line_chart(chart_data, height=210)
+
+# Your other code below
+
 
 # Fetch stock data
 try:
