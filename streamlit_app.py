@@ -2,6 +2,7 @@ import yfinance as yf
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from some_module import Bar
 
 
 df = pd.read_csv("project1data.csv")
@@ -84,6 +85,8 @@ try:
     st.line_chart(stock_df[selected_feature])
 
     # Additional analysis or visualizations can be added here
+    #showing chosen symbol with chosen stock on same axis
+
 
 except Exception as e:
     st.error(f"Error fetching stock data: {e}")
