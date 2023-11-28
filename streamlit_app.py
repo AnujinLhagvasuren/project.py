@@ -68,7 +68,7 @@ price_dict = {
     'AAR': "Buy price is 2700 tugruk ans Sale price is 3160 tugruks",}
     
 selected = price_dict.get(stock_dropdown)
-st.write(f"Price info {stock_dropdown}:', selected)
+st.write(f"Price info {stock_dropdown}:", selected)
 
     
 
