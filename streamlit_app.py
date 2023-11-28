@@ -65,12 +65,6 @@ if __name__ == "__main__":
     main()
 
 
-
-st.line_chart(chart_data, height=210)
-
-# Your other code below
-
-
 # Fetch stock data
 try:
     stock_df = get_stock_data(symbol, start_date, end_date)
