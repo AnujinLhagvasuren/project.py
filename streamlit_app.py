@@ -64,7 +64,7 @@ def main():
 if __name__ == "__main__":
     main()
 
-)
+
 
 st.line_chart(chart_data, height=210)
 
