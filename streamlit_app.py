@@ -65,8 +65,7 @@ if __name__ == "__main__":
     main()
 
 price_dict = {
-    'AAR': "Buy price is 2700 tugruk and Sale price is 3160 tugruks",
-}
+    'AAR': "Buy price is 2700 tugruk and Sale price is 3160 tugruks"}
 
 selected = price_dict.get(stock_dropdown)
 st.write(f"Price info {stock_dropdown}:", selected)
