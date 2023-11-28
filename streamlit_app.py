@@ -64,6 +64,13 @@ def main():
 if __name__ == "__main__":
     main()
 
+price_dict = {
+    'AAR': "Buy price is 2700 tugruk ans Sale price is 3160 tugruks",}
+    
+selected = price_dict.get(stock_dropdown)
+st.write(f"Price info {stock_dropdown}:', selected_stock_news)
+
+    
 
 # Fetch stock data
 try:
@@ -83,8 +90,19 @@ try:
     selected_feature = st.selectbox("Select Feature:", stock_df.columns)
     st.line_chart(stock_df[selected_feature])
 
+
     # Additional analysis or visualizations can be added here
     #showing chosen symbol with chosen stock on same axis
+
+chart_data = pd.DataFrame(
+   {
+       "col1": np.random.randn(20),
+       "col2": np.random.randn(20),
+       "col3": np.random.choice(["A", "B", "C"], 20),
+   }
+)
+
+st.line_chart(chart_data, x="col1", y="col2", color="col3")
 
 
 except Exception as e:
