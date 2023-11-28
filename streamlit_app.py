@@ -65,10 +65,16 @@ if __name__ == "__main__":
     main()
 
 price_dict = {
-    'AAR': "Buy price is 2700 tugruk and Sale price is 3160 tugruks"}
+    'AAR': "Buy price is 2700 tugruk and Sale price is 3160 tugruks",
+}
 
-selected = price_dict.get(stock_dropdown)
+# Assume stock_dropdown is a variable with the selected stock
+stock_dropdown = 'AAR'  # You should replace this with your actual logic for selecting a stock
+
+# Use get method to retrieve the value from price_dict, and handle the case where it's not found
+selected = price_dict.get(stock_dropdown, f"No information available for {stock_dropdown}")
 st.write(f"Price info {stock_dropdown}:", selected)
+
 
 
 # Fetch stock data
