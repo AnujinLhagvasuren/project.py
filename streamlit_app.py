@@ -182,34 +182,79 @@ st.write(f"Sell Price: {stock_info_dict[symbol]['sell_price']}")
 
 # ... (previous code)
 
-# Bar chart using pyecharts
-b = (
-    Bar()
-    .add_xaxis(["Microsoft", "Amazon", "IBM", "Oracle", "Google", "Alibaba"])
-    .add_yaxis("2017-2018 Revenue in (billion $)", random.sample(range(100), 10))
-    .set_global_opts(
-        title_opts=opts.TitleOpts(
-            title="Top cloud providers 2018", subtitle="2017-2018 Revenue"
-        ),
-        toolbox_opts=opts.ToolboxOpts(),
+import yfinance as yf
+import streamlit as st
+import pandas as pd
+import plotly.express as px
+from pyecharts.charts import Bar
+from streamlit_echarts import st_pyecharts
+import random
+
+# Function to fetch stock data using yfinance
+def get_stock_data(symbol, start_date, end_date):
+    stock_data = yf.download(symbol, start=start_date, end=end_date)
+    return stock_data
+
+# Sidebar for single stock selection
+symbol_options = [
+    "AAPL", "GOOGL", "MSFT", "AMZN", "TSLA", "FB", "NFLX", "NVDA", "V", "PYPL"
+]
+symbol = st.sidebar.selectbox("Select Stock Symbol", symbol_options)
+start_date = st.sidebar.date_input("Start Date", pd.to_datetime("2022-01-01"))
+end_date = st.sidebar.date_input("End Date", pd.to_datetime("2023-01-01"))
+
+# Fetch stock data
+try:
+    stock_df = get_stock_data(symbol, start_date, end_date)
+
+    # Main title
+    st.title(f"{symbol} Stock Analysis")
+
+    # Stock information
+    st.write(f"## {symbol} Stock Information")
+    st.write(f"Buy Price: $2700.00")
+    st.write(f"Sell Price: $3160.00")
+
+    # Display stock data
+    st.write(f"## {symbol} Stock Data")
+    st.dataframe(stock_df.head())
+
+    # Line chart for closing prices
+    st.write(f"## {symbol} Closing Price Chart")
+    fig = px.line(stock_df, x=stock_df.index, y="Close", title=f"{symbol} Closing Price")
+    st.plotly_chart(fig)
+
+    # Candlestick chart
+    st.write(f"## {symbol} Candlestick Chart")
+    fig_candle = px.candlestick(stock_df, x=stock_df.index, open="Open", high="High", low="Low", close="Close")
+    st.plotly_chart(fig_candle)
+
+    # Interactive widgets
+    st.write("## Interactive Widgets")
+    selected_feature = st.selectbox("Select Feature:", stock_df.columns)
+    st.line_chart(stock_df[selected_feature])
+
+    # Bar chart using pyecharts
+    b = (
+        Bar()
+        .add_xaxis(["Microsoft", "Amazon", "IBM", "Oracle", "Google", "Alibaba"])
+        .add_yaxis("2017-2018 Revenue in (billion $)", random.sample(range(100), 10))
+        .set_global_opts(
+            title_opts=opts.TitleOpts(
+                title="Top cloud providers 2018", subtitle="2017-2018 Revenue"
+            ),
+            toolbox_opts=opts.ToolboxOpts(),
+        )
     )
-)
-st_pyecharts(
-    b, key="echarts"
-)  # Add key argument to not remount component at every Streamlit run
+    st_pyecharts(
+        b, key="echarts"
+    )  # Add key argument to not remount component at every Streamlit run
 
-# ... (previous code)
+    # Button to randomize data
+    if st.button("Randomize Data"):
+        # For demonstration purposes, randomly update the stock data
+        stock_df["Close"] = random.sample(range(100), len(stock_df))
+        st.success("Data randomized successfully!")
 
-# Plot stock closing price using Plotly Express
-st.write(f"## {symbol} Closing Price Chart")
-closing_price_chart = px.line(stock_df, x=stock_df.index, y="Close", title=f"{symbol} Closing Price")
-st.plotly_chart(closing_price_chart)
-
-# Button to randomize data
-if st.button("Randomize Data"):
-    # For demonstration purposes, randomly update the stock data
-    stock_df["Close"] = random.sample(range(100), len(stock_df))
-    st.success("Data randomized successfully!")
-
-# ... (remaining code)
-
+except Exception as e:
+    st.error(f"Error fetching stock data: {e}")
