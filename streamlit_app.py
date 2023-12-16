@@ -2,15 +2,6 @@ import yfinance as yf
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from correct_path.to.some_module import Bar
-pip install some_module
-from some_module import Bar
-
-# Inside some_module.py
-class Bar:
-    # Class definition
-
-
 
 df = pd.read_csv("project1data.csv")
 st.dataframe(df)
