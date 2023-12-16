@@ -182,7 +182,6 @@ st.write(f"Sell Price: {stock_info_dict[symbol]['sell_price']}")
 
 # ... (previous code)
 
-pip install streamlit_echarts
 
 
 import streamlit as st
