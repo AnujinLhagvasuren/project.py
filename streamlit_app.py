@@ -186,9 +186,8 @@ import yfinance as yf
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from pyecharts.charts import Bar
-from streamlit_echarts import st_pyecharts
-import random
+import plotly.graph_objects as go
+import numpy as np
 
 # Function to fetch stock data using yfinance
 def get_stock_data(symbol, start_date, end_date):
@@ -219,42 +218,35 @@ try:
     st.write(f"## {symbol} Stock Data")
     st.dataframe(stock_df.head())
 
-    # Line chart for closing prices
-    st.write(f"## {symbol} Closing Price Chart")
-    fig = px.line(stock_df, x=stock_df.index, y="Close", title=f"{symbol} Closing Price")
+    # Line chart for closing prices with moving average
+    st.write(f"## {symbol} Closing Price Chart with Moving Average")
+    fig = go.Figure()
+
+    # Closing price line
+    fig.add_trace(go.Scatter(x=stock_df.index, y=stock_df['Close'], mode='lines', name='Closing Price'))
+
+    # Moving average line (adjust window size as needed)
+    fig.add_trace(go.Scatter(x=stock_df.index, y=stock_df['Close'].rolling(window=20).mean(),
+                             mode='lines', name='20-day Moving Average', line=dict(dash='dash')))
+
+    fig.update_layout(title=f"{symbol} Closing Price with Moving Average",
+                      xaxis_title='Date', yaxis_title='Closing Price')
+
     st.plotly_chart(fig)
 
-    # Candlestick chart
-    st.write(f"## {symbol} Candlestick Chart")
-    fig_candle = px.candlestick(stock_df, x=stock_df.index, open="Open", high="High", low="Low", close="Close")
-    st.plotly_chart(fig_candle)
+    # Date range slider
+    st.write("## Date Range Slider")
+    selected_dates = st.slider("Select Date Range", min_value=min(stock_df.index), max_value=max(stock_df.index),
+                              value=(min(stock_df.index), max(stock_df.index)), format="DD/MM/YYYY")
+    st.write(f"Selected Date Range: {selected_dates[0]} to {selected_dates[1]}")
 
-    # Interactive widgets
-    st.write("## Interactive Widgets")
-    selected_feature = st.selectbox("Select Feature:", stock_df.columns)
-    st.line_chart(stock_df[selected_feature])
-
-    # Bar chart using pyecharts
-    b = (
-        Bar()
-        .add_xaxis(["Microsoft", "Amazon", "IBM", "Oracle", "Google", "Alibaba"])
-        .add_yaxis("2017-2018 Revenue in (billion $)", random.sample(range(100), 10))
-        .set_global_opts(
-            title_opts=opts.TitleOpts(
-                title="Top cloud providers 2018", subtitle="2017-2018 Revenue"
-            ),
-            toolbox_opts=opts.ToolboxOpts(),
-        )
-    )
-    st_pyecharts(
-        b, key="echarts"
-    )  # Add key argument to not remount component at every Streamlit run
-
-    # Button to randomize data
-    if st.button("Randomize Data"):
-        # For demonstration purposes, randomly update the stock data
-        stock_df["Close"] = random.sample(range(100), len(stock_df))
-        st.success("Data randomized successfully!")
+    # Toggle between line and bar chart
+    st.write("## Toggle between Line and Bar Chart")
+    chart_type = st.radio("Select Chart Type", ["Line Chart", "Bar Chart"])
+    if chart_type == "Line Chart":
+        st.line_chart(stock_df['Close'])
+    elif chart_type == "Bar Chart":
+        st.bar_chart(stock_df['Close'])
 
 except Exception as e:
     st.error(f"Error fetching stock data: {e}")
