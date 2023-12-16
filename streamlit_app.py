@@ -1,7 +1,10 @@
 import yfinance as yf
 import streamlit as st
 import pandas as pd
+from some_module import Bar
 import plotly.express as px
+
+Bar = SomeClass()  # or Bar = some_function()
 
 
 df = pd.read_csv("project1data.csv")
