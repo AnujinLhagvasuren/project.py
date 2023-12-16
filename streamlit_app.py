@@ -2,6 +2,7 @@ import yfinance as yf
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+pip install yfinance streamlit pandas plotly pyecharts streamlit_echarts
 
 df = pd.read_csv("project1data.csv")
 st.dataframe(df)
@@ -197,3 +198,19 @@ b = (
 st_pyecharts(
     b, key="echarts"
 )  # Add key argument to not remount component at every Streamlit run
+
+# ... (previous code)
+
+# Plot stock closing price using Plotly Express
+st.write(f"## {symbol} Closing Price Chart")
+closing_price_chart = px.line(stock_df, x=stock_df.index, y="Close", title=f"{symbol} Closing Price")
+st.plotly_chart(closing_price_chart)
+
+# Button to randomize data
+if st.button("Randomize Data"):
+    # For demonstration purposes, randomly update the stock data
+    stock_df["Close"] = random.sample(range(100), len(stock_df))
+    st.success("Data randomized successfully!")
+
+# ... (remaining code)
+
