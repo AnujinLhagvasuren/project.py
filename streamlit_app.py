@@ -2,9 +2,6 @@ import yfinance as yf
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-source venv/bin/activate
-
-pip install yfinance streamlit pandas plotly pyecharts streamlit_echarts
 
 df = pd.read_csv("project1data.csv")
 st.dataframe(df)
