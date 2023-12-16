@@ -182,12 +182,14 @@ st.write(f"Sell Price: {stock_info_dict[symbol]['sell_price']}")
 
 # ... (previous code)
 
-import yfinance as yf
+
+
+ import yfinance as yf
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objects as go
-import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 # Function to fetch stock data using yfinance
 def get_stock_data(symbol, start_date, end_date):
@@ -218,35 +220,20 @@ try:
     st.write(f"## {symbol} Stock Data")
     st.dataframe(stock_df.head())
 
-    # Line chart for closing prices with moving average
-    st.write(f"## {symbol} Closing Price Chart with Moving Average")
-    fig = go.Figure()
+    # Scatter plot for closing price vs. trading volume
+    st.write(f"## Scatter Plot: Closing Price vs. Trading Volume")
+    fig_scatter = px.scatter(stock_df, x="Close", y="Volume", title=f"{symbol} Closing Price vs. Trading Volume")
+    st.plotly_chart(fig_scatter)
 
-    # Closing price line
-    fig.add_trace(go.Scatter(x=stock_df.index, y=stock_df['Close'], mode='lines', name='Closing Price'))
-
-    # Moving average line (adjust window size as needed)
-    fig.add_trace(go.Scatter(x=stock_df.index, y=stock_df['Close'].rolling(window=20).mean(),
-                             mode='lines', name='20-day Moving Average', line=dict(dash='dash')))
-
-    fig.update_layout(title=f"{symbol} Closing Price with Moving Average",
-                      xaxis_title='Date', yaxis_title='Closing Price')
-
-    st.plotly_chart(fig)
-
-    # Date range slider
-    st.write("## Date Range Slider")
-    selected_dates = st.slider("Select Date Range", min_value=min(stock_df.index), max_value=max(stock_df.index),
-                              value=(min(stock_df.index), max(stock_df.index)), format="DD/MM/YYYY")
-    st.write(f"Selected Date Range: {selected_dates[0]} to {selected_dates[1]}")
-
-    # Toggle between line and bar chart
-    st.write("## Toggle between Line and Bar Chart")
-    chart_type = st.radio("Select Chart Type", ["Line Chart", "Bar Chart"])
-    if chart_type == "Line Chart":
-        st.line_chart(stock_df['Close'])
-    elif chart_type == "Bar Chart":
-        st.bar_chart(stock_df['Close'])
+    # Regression plot using seaborn
+    st.write(f"## Regression Plot: Closing Price vs. Trading Volume")
+    sns.set(style="whitegrid")
+    plt.figure(figsize=(10, 6))
+    sns.regplot(x="Close", y="Volume", data=stock_df, scatter_kws={"s": 20}, line_kws={"color": "red"})
+    plt.title(f"{symbol} Closing Price vs. Trading Volume")
+    plt.xlabel("Closing Price")
+    plt.ylabel("Trading Volume")
+    st.pyplot(plt)
 
 except Exception as e:
     st.error(f"Error fetching stock data: {e}")
