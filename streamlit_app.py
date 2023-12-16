@@ -182,7 +182,7 @@ st.write(f"Sell Price: {stock_info_dict[symbol]['sell_price']}")
 
 # ... (previous code)
 
-import * as echarts from 'echarts';
+import as echarts from 'echarts';
 
 var chartDom = document.getElementById('main');
 var myChart = echarts.init(chartDom);
