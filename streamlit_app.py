@@ -184,7 +184,7 @@ st.write(f"Sell Price: {stock_info_dict[symbol]['sell_price']}")
 
 
 
- import yfinance as yf
+import yfinance as yf
 import streamlit as st
 import pandas as pd
 import plotly.express as px
