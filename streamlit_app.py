@@ -159,3 +159,41 @@ st_pyecharts(
 )  # Add key argument to not remount component at every Streamlit run
 st.button("Randomize data")
 
+from pyecharts import options as opts
+from streamlit_echarts import st_pyecharts
+import random
+
+# Sample data for multiple stocks
+stock_info_dict = {
+    'AAR': {"buy_price": 2700, "sell_price": 3160},
+    # Add more stocks and their information here
+}
+
+# Sidebar for single stock selection
+symbol_options = list(stock_info_dict.keys())
+symbol = st.sidebar.selectbox("Select Stock Symbol", symbol_options)
+start_date = st.sidebar.date_input("Start Date", pd.to_datetime("2022-01-01"))
+end_date = st.sidebar.date_input("End Date", pd.to_datetime("2023-01-01"))
+
+# Display selected stock information
+st.write(f"## {symbol} Stock Information")
+st.write(f"Buy Price: {stock_info_dict[symbol]['buy_price']}")
+st.write(f"Sell Price: {stock_info_dict[symbol]['sell_price']}")
+
+# ... (previous code)
+
+# Bar chart using pyecharts
+b = (
+    Bar()
+    .add_xaxis(["Microsoft", "Amazon", "IBM", "Oracle", "Google", "Alibaba"])
+    .add_yaxis("2017-2018 Revenue in (billion $)", random.sample(range(100), 10))
+    .set_global_opts(
+        title_opts=opts.TitleOpts(
+            title="Top cloud providers 2018", subtitle="2017-2018 Revenue"
+        ),
+        toolbox_opts=opts.ToolboxOpts(),
+    )
+)
+st_pyecharts(
+    b, key="echarts"
+)  # Add key argument to not remount component at every Streamlit run
